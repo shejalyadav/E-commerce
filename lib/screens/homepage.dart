@@ -1,4 +1,4 @@
-import 'package:ecommerce/bagPage.dart';
+import 'package:ecommerce/screens/bagPage.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -52,6 +52,7 @@ class _HomePageState extends State {
                   borderRadius: BorderRadius.circular(9),
                 ),
                 child: TextField(
+                  controller: _searchController,
                   decoration: InputDecoration(
                     prefixIcon: Padding(
                       padding: EdgeInsets.only(left: 12, right: 9),

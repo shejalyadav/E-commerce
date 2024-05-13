@@ -1,5 +1,8 @@
-import 'package:ecommerce/homepage.dart';
-import 'package:ecommerce/signup.dart';
+import 'package:ecommerce/model/UserClass.dart';
+import 'package:ecommerce/screens/homepage.dart';
+import 'package:ecommerce/screens/signup.dart';
+import 'package:ecommerce/services/userOperations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -9,7 +12,8 @@ class Login extends StatefulWidget {
 
 class _LoginPageState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  // User user = User();
+  UserOperations operate=UserOperations();
+  UserClass u=UserClass(username: '', password: '');
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -46,15 +50,14 @@ class _LoginPageState extends State<Login> {
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: InputDecoration(
                           prefixIcon: Padding(
-                        padding: EdgeInsets.only(left: 9, right: 9),
-                        child: Icon(Icons.account_circle_outlined),
-                      ),
+                            padding: EdgeInsets.only(left: 9, right: 9),
+                            child: Icon(Icons.account_circle_outlined),
+                          ),
                           labelText: 'Username',
                           fillColor: Colors.grey[100],
-                              
                           filled: true,
                           border: OutlineInputBorder(
-                             borderRadius: BorderRadius.circular(9.0),
+                            borderRadius: BorderRadius.circular(9.0),
                             borderSide: BorderSide(
                                 color: Color.fromARGB(255, 180, 104, 216),
                                 width: 0.5),
@@ -62,7 +65,6 @@ class _LoginPageState extends State<Login> {
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 15.0),
                         ),
-                        
                       ),
                     ),
                     SizedBox(height: 20.0),
@@ -83,24 +85,23 @@ class _LoginPageState extends State<Login> {
                         },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: InputDecoration(
-                           prefixIcon: Padding(
-                        padding: EdgeInsets.only(left: 9, right: 9),
-                        child: Icon(Icons.lock_outline),
-                      ),
-                      suffixIcon: Padding(padding: EdgeInsets.only(left: 14, right: 14),
-                        child: Icon(Icons.remove_red_eye),
-                      ),
+                          prefixIcon: Padding(
+                            padding: EdgeInsets.only(left: 9, right: 9),
+                            child: Icon(Icons.lock_outline),
+                          ),
+                          suffixIcon: Padding(
+                            padding: EdgeInsets.only(left: 14, right: 14),
+                            child: Icon(Icons.remove_red_eye),
+                          ),
                           labelText: 'Password',
                           fillColor: Colors.grey[100],
                           filled: true,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(9.0),
-                            
                           ),
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 15.0),
                         ),
-                       
                       ),
                     ),
                     SizedBox(height: 30.0),
@@ -116,16 +117,18 @@ class _LoginPageState extends State<Login> {
                           minimumSize: Size(180, 50),
                         ),
                         onPressed: () {
+                          u.username=_usernameController.text.trim();
+                          u.password=_passwordController.text.trim();
                           final form = _formKey.currentState;
                           if (form!.validate()) {
                             print("Valid Form");
+                             operate.add(u);
                             Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HomePage(),
-                          ),
-                        );
-                           
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomePage(),
+                              ),
+                            );
                           } else {
                             print("error in form");
                           }
@@ -150,11 +153,11 @@ class _LoginPageState extends State<Login> {
                         ),
                         TextButton(
                           onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Signup()),
-                      );
-                    },
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Signup()),
+                            );
+                          },
                           child: Text(
                             'Sign Up',
                             style: TextStyle(color: Colors.red),
@@ -162,7 +165,6 @@ class _LoginPageState extends State<Login> {
                         ),
                       ],
                     ),
-                    
                   ],
                 ),
               ),
