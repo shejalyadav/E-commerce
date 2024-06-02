@@ -1,4 +1,5 @@
 import 'package:ecommerce/model/UserClass.dart';
+import 'package:ecommerce/screens/BottomNavBar.dart';
 import 'package:ecommerce/screens/homepage.dart';
 import 'package:ecommerce/screens/signup.dart';
 import 'package:ecommerce/services/userOperations.dart';
@@ -12,8 +13,9 @@ class Login extends StatefulWidget {
 
 class _LoginPageState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  UserOperations operate=UserOperations();
-  UserClass u=UserClass(username: '', password: '');
+  UserOperations operate = UserOperations();
+  bool _obscurePassword = true;
+  UserClass u = UserClass(username: '', password: '');
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -74,7 +76,7 @@ class _LoginPageState extends State<Login> {
                       ),
                       child: TextFormField(
                         controller: _passwordController,
-                        obscureText: true,
+                         obscureText: _obscurePassword,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'This field is required';
@@ -91,8 +93,19 @@ class _LoginPageState extends State<Login> {
                           ),
                           suffixIcon: Padding(
                             padding: EdgeInsets.only(left: 14, right: 14),
-                            child: Icon(Icons.remove_red_eye),
+                             child: IconButton(
+                              icon: Icon(
+                                _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscurePassword = !_obscurePassword;
+                                });
+                              },
+                            ),
                           ),
+                        
+
                           labelText: 'Password',
                           fillColor: Colors.grey[100],
                           filled: true,
@@ -116,23 +129,32 @@ class _LoginPageState extends State<Login> {
                           ),
                           minimumSize: Size(180, 50),
                         ),
-                        onPressed: () {
-                          u.username=_usernameController.text.trim();
-                          u.password=_passwordController.text.trim();
-                          final form = _formKey.currentState;
-                          if (form!.validate()) {
-                            print("Valid Form");
-                             operate.add(u);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomePage(),
-                              ),
-                            );
-                          } else {
-                            print("error in form");
-                          }
-                        },
+                        onPressed: () async {
+                                u.username = _usernameController.text.trim();
+                                u.password = _passwordController.text.trim();
+                                final form = _formKey.currentState;
+                                if (form!.validate()) {
+                                  print("Valid Form");
+                                  int a = await operate.login(u);
+                                  if (a == 1) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => BottomNvarBar(),
+                                      ),
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text("Incorrect credentials"),
+                                        duration: Duration(milliseconds: 1500),
+                                      ),
+                                    );
+                                  }
+                                } else {
+                                  print("error in form");
+                                }
+                              },
                         child: Text(
                           'Login',
                           style: TextStyle(

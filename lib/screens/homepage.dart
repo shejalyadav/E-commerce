@@ -1,7 +1,12 @@
+import 'package:ecommerce/model/UserClass.dart';
 import 'package:ecommerce/screens/bagPage.dart';
+import 'package:ecommerce/screens/menuDrawer.dart';
+import 'package:ecommerce/screens/profile.dart';
+import 'package:ecommerce/screens/slideshowBanners.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -10,12 +15,11 @@ class _HomePageState extends State {
   final TextEditingController _searchController = TextEditingController();
   var _selectedIndex = 0;
 
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
+     drawer: MenuDrawer(),
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -35,7 +39,12 @@ class _HomePageState extends State {
             child: IconButton(
               icon: Icon(Icons.account_circle),
               iconSize: 32,
-              onPressed: () {},
+              onPressed: () {
+                 Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                );
+              },
             ),
           ),
         ],
@@ -65,22 +74,7 @@ class _HomePageState extends State {
               ),
             ),
             SizedBox(height: 16),
-            Container(
-              height: 200,
-              width: double.infinity,
-              child: PageView(
-                children: [
-                  Image.asset(
-                    'assets/images/slide1.png',
-                    fit: BoxFit.cover,
-                  ),
-                  Image.asset(
-                    'assets/images/slide2.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ],
-              ),
-            ),
+            SlideshowBanners(), // container holding banners(slideshow)
             SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
