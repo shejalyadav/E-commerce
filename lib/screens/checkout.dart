@@ -1,4 +1,5 @@
 import 'package:ecommerce/model/product.dart';
+import 'package:ecommerce/screens/BottomNavBar.dart';
 import 'package:ecommerce/screens/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/model/cartProvider.dart';
@@ -65,7 +66,7 @@ class _CheckoutState extends State<Checkout> {
                   Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomePage(),
+                                builder: (context) => BottomNavBar(),
                               ),
                             );
                 },

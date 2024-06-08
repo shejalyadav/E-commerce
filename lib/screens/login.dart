@@ -140,7 +140,7 @@ class _LoginPageState extends State<Login> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => BottomNvarBar(),
+                                        builder: (context) => BottomNavBar(),
                                       ),
                                     );
                                   } else {

@@ -5,12 +5,12 @@ import 'package:ecommerce/screens/homepage.dart';
 import 'package:ecommerce/screens/profile.dart';
 import 'package:flutter/material.dart';
 
-class BottomNvarBar extends StatefulWidget {
+class BottomNavBar extends StatefulWidget {
   @override
-  State<BottomNvarBar> createState() => _HomeState();
+  State<BottomNavBar> createState() => _HomeState();
 }
 
-class _HomeState extends State<BottomNvarBar> {
+class _HomeState extends State<BottomNavBar> {
   int _page = 0;
 
   List<Widget> _pages = [HomePage(), ProfilePage(), Checkout()];
